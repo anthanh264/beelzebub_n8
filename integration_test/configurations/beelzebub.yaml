@@ -1,0 +1,13 @@
+core:
+  logging:
+    debug: false
+    debugReportCaller: false
+    logDisableTimestamp: true
+    logsPath: ./logs
+  tracings:
+    rabbit-mq:
+      enabled: true
+      uri: "amqp://integration:integration@localhost:5672/"
+  prometheus:
+    path: "/metrics"
+    port: ":2112"

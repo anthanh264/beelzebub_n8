@@ -1,0 +1,5 @@
+nest-asyncio==1.5.8
+schedule==1.2.1
+python-telegram-bot==20.5
+docker==5.0.3
+requests==2.31.0
