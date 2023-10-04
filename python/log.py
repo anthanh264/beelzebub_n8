@@ -3,8 +3,8 @@ import requests
 import json
 import time
 
-bot_token = "6354050635:AAGC2jQD3wUc8J3qNWE8N4qlgu5m4XiDOkk"
-chat_id = "-4013705832"
+bot_token = ""
+chat_id = ""
 
 container_name_or_id = 'beelzebub'
 docker_client = docker.from_env()
@@ -31,11 +31,11 @@ def send_telegram_message(message_text):
         response.raise_for_status()
         last_message_time = time.time()
     except requests.exceptions.HTTPError as e:
-        pass
+        print(f'HTTP Error: {e}')
     except requests.exceptions.RequestException as e:
-        pass
+        print(f'Request Error: {e}')
     except Exception as e:
-        pass
+        print(f'An error occurred: {e}')
 
 def format_ssh_log(log_data):
     formatted_message = f"Time: {log_data.get('DateTime')}\n" \
@@ -95,8 +95,8 @@ def get_new_container_logs(container):
                         if formatted_message != last_log_message:
                             send_telegram_message(formatted_message)
                             last_log_message = formatted_message
-            except json.JSONDecodeError:
-                pass
+            except json.JSONDecodeError as e:
+                print(f'JSON Decode Error: {e}')
 
     except Exception as e:
         print(f'Error getting container logs: {e}')
