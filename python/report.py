@@ -8,7 +8,7 @@ import docker
 
 TELEGRAM_BOT_TOKEN = "6428255299:AAGK42E7h-a4625uN_HTm_gN8RVdxzjky2Q"
 chat_id = "-4015337273"
-time_sent = "15:19"
+time_receive = "08:00"
 
 client = docker.from_env()
 container = client.containers.get('beelzebub')
@@ -100,7 +100,7 @@ def perform_analytics_and_send_message():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(send_telegram_message())
 
-schedule.every().day.at(time_sent).do(perform_analytics_and_send_message)
+schedule.every().day.at(time_receive).do(perform_analytics_and_send_message)
 
 while True:
     schedule.run_pending()
