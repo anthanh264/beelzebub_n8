@@ -2,8 +2,8 @@ import docker
 import requests
 import json
 import time
-bot_token = "6428255299:AAGK42E7h-a4625uN_HTm_gN8RVdxzjky2Q"
-chat_id = "-4015337273"
+bot_token = ""
+chat_id = ""
 container_name_or_id = 'beelzebub'
 docker_client = docker.from_env()
 api_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'

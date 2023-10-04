@@ -6,8 +6,8 @@ import schedule
 import time
 import docker
 
-TELEGRAM_BOT_TOKEN = "6428255299:AAGK42E7h-a4625uN_HTm_gN8RVdxzjky2Q"
-chat_id = "-4015337273"
+bot_token = ""
+chat_id = ""
 time_receive = "08:00"
 
 client = docker.from_env()
@@ -94,7 +94,7 @@ def perform_analytics_and_send_message():
     print("Analytics:\n", combined_output)
 
     async def send_telegram_message():
-        bot = Bot(token=TELEGRAM_BOT_TOKEN)
+        bot = Bot(token=bot_token)
         await bot.send_message(chat_id=chat_id, text=combined_output)
 
     loop = asyncio.get_event_loop()
