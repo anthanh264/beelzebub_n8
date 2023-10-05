@@ -13,6 +13,18 @@ last_log_message = None
 rate_limit = 25
 last_message_time = 0
 
+def convert_to_gmt7(timestamp_utc):
+    try:
+        # Convert the timestamp to a datetime object in UTC
+        datetime_utc = datetime.datetime.strptime(timestamp_utc, '%Y-%m-%dT%H:%M:%SZ')
+        # Add 7 hours to the UTC datetime to convert to GMT+7
+        datetime_gmt7 = datetime_utc + datetime.timedelta(hours=7)
+        # Format the datetime in GMT+7 as a string
+        timestamp_gmt7 = datetime_gmt7.strftime('%Y-%m-%dT%H:%M:%SZ')
+        return timestamp_gmt7
+    except ValueError:
+        return "Invalid Timestamp"
+        
 def send_telegram_message(message_text):
     global last_message_time
     current_time = time.time()
@@ -38,7 +50,9 @@ def send_telegram_message(message_text):
         print(f'An error occurred: {e}')
 
 def format_ssh_log(log_data):
-    formatted_message = f"Time: {log_data.get('DateTime')}\n" \
+    timestamp = log_data.get('DateTime')
+    timestamp = convert_to_gmt7(timestamp)
+    formatted_message = f"Time: {timestamp}\n" \
                         f"Protocol: SSH\n" \
                         f"IP: {log_data.get('RemoteAddr').split(':')[0]}\n" \
                         f"User: {log_data.get('User')}\n" \
@@ -48,7 +62,9 @@ def format_ssh_log(log_data):
     return formatted_message
 
 def format_http_log(log_data):
-    formatted_message = f"Time: {log_data.get('DateTime')}\n" \
+    timestamp = log_data.get('DateTime')
+    timestamp = convert_to_gmt7(timestamp)
+    formatted_message = f"Time: {timestamp}\n" \
                         f"Protocol: HTTP\n" \
                         f"IP: {log_data.get('RemoteAddr').split(':')[0]}\n" \
                         f"User: {log_data.get('User')}\n" \
@@ -58,7 +74,9 @@ def format_http_log(log_data):
     return formatted_message
 
 def format_tcp_log(log_data):
-    formatted_message = f"Time: {log_data.get('DateTime')}\n" \
+    timestamp = log_data.get('DateTime')
+    timestamp = convert_to_gmt7(timestamp)
+    formatted_message = f"Time: {timestamp}\n" \
                         f"Protocol: TCP\n" \
                         f"IP: {log_data.get('RemoteAddr').split(':')[0]}\n" \
                         f"Description: {log_data.get('Description')}"

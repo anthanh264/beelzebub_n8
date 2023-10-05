@@ -27,6 +27,8 @@ def perform_analytics_and_send_message():
     try:
         end_time = datetime.datetime.now()
         start_time = end_time - datetime.timedelta(hours=hours_log)
+        start_time_GMT7 = start_time + datetime.timedelta(hours=7)   
+        end_time_GMT7 = end_time + datetime.timedelta(hours=7)  
         with open(logs_path, "r", encoding="utf-8") as file:
             log_entries = file.readlines()
         ssh_usernames = Counter()
@@ -88,7 +90,7 @@ def perform_analytics_and_send_message():
         top_ips = dict(connections_per_ip.most_common(10))
 
         combined_output = ""
-        combined_output += f"From {start_time} to {end_time}\n"
+        combined_output += f"From {start_time_GMT7} to {end_time_GMT7}\n"
         combined_output += "Top 10 SSH Usernames:\n"
         for username, count in top_ssh_usernames.items():
             combined_output += f"{username}: {count}\n"
